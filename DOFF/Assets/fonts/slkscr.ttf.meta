@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 17e22dc13a161794c8a9e896fcb37bc0
+guid: d8fc7d40da675664ba2105df2c13b2fe
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Joystix
+  - Silkscreen
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
