@@ -8,6 +8,10 @@ public class WeaponColliderScript : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.gameObject.GetComponent<EnemyScript>().TakeDamage(2);
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<EnemyScript>().TakeDamage(2);
+        }
+        
     }
 }

@@ -11,17 +11,23 @@
         private Rigidbody2D rb;
         private Animator animator;
         public bool turnedLeft = false;
-        public float health = 100;
-        
-        public Image healthfill;
-        private float healthWidth;
+        public int PlayerMaxHealth = 100;
+        public int currentHealth;
+        public Behaviour script;
+        public Behaviour scripta;
+        public Behaviour scriptb;
+        public Behaviour scriptc;
+        public HealthBarScript healthBar;
         public Text mainText;
+        private PlayerMovement disable;
 
         void Start()
         {
+            disable =GetComponent<PlayerMovement>();
             rb = GetComponent<Rigidbody2D>();   
             animator = GetComponent<Animator>();
-            healthWidth = healthfill.sprite.rect.width;       
+            currentHealth = PlayerMaxHealth;
+            healthBar.SetMaxHealth(PlayerMaxHealth);
         }
     
       
@@ -52,16 +58,14 @@
             if(collision.gameObject.CompareTag("Enemy"))
             {
                 transform.GetChild(0).gameObject.SetActive(true);
-                health -= collision.gameObject.GetComponent<EnemyScript>().GetHitDamage();
-                if(health < 1)
+                currentHealth -= collision.gameObject.GetComponent<EnemyScript>().GetHitDamage();
+                if(currentHealth < 1)
                 {
-                    healthfill.enabled = false;
                     mainText.gameObject.SetActive(true);
-                    animator.Play("death");
+                    Die();
                     mainText.text = "Game Over";
                 }
-                Vector2 temp = new Vector2(healthWidth * (health/100), 40);
-                healthfill.rectTransform.sizeDelta = temp;
+                healthBar.SetHealth(currentHealth);
                 Invoke("HidePlayerBlood", 0.25f);
             }
         }
@@ -69,5 +73,14 @@
         void HidePlayerBlood()
         {
             transform.GetChild(0).gameObject.SetActive(false);
+        }
+
+        private void Die()
+        {
+            script.enabled = false;
+            scripta.enabled = false;
+            scriptb.enabled = false;
+            scriptc.enabled = false;
+            animator.SetTrigger("death");
         }
     }

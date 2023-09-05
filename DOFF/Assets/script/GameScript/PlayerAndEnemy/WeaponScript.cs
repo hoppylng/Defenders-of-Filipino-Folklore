@@ -12,13 +12,11 @@ public class WeaponScript : MonoBehaviour
     
     int degree = 0;
     private float weaponY = -0.25f;
-    private float weaponX = -0.22f;
+    private float weaponX = -0.19f;
 
     Vector3 pos;
     public GameObject player;
-    public ButtonController button;
-    
-    
+    public ButtonController button; 
 
     void Update()
     {  
@@ -35,8 +33,16 @@ public class WeaponScript : MonoBehaviour
     {
         if(swing)
         {
-            degree -=7;
-            if(degree <-65)
+            if(player.GetComponent<PlayerMovement>().turnedLeft)
+            {
+                degree += 7; // Swing sword 
+            }   
+            else
+            {
+                degree -= 7; // Swing sword 
+            }
+            
+            if(degree > 65 || degree <-65)
             {
                 degree = 0;
                 swing = false;
@@ -44,23 +50,21 @@ public class WeaponScript : MonoBehaviour
                 transform.GetChild(0).gameObject.SetActive(false);
                 
             }
-            transform.eulerAngles = Vector3.forward * degree;
-            
-        }
-        
+            transform.eulerAngles = Vector3.forward * degree;       
+        }       
     }
 
     void Attack()
     {
-        if(player.GetComponent<PlayerMovement>().turnedLeft)
+        if(player.GetComponent<PlayerMovement>().turnedLeft) // When Player facing left
         {
             GetComponent<SpriteRenderer>().flipX = true;
-            weaponX = -0.21f;
+            weaponX = -0.19f; // The Weapon Sprite goes to the left side of the Player
         }
         else
         {
             GetComponent<SpriteRenderer>().flipX = false;
-            weaponX = 0.13f;
+            weaponX = 0.19f; // The Weapon Sprite stays at the right side of the Player
         }
         pos = player.transform.position;
         pos.x += weaponX;
