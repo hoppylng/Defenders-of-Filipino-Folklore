@@ -14,14 +14,13 @@ public class JoystickMovement : MonoBehaviour
     private Vector2 joystickOriginalPos;
     private float joystickRadius;
 
-    // Start is called before the first frame update
     void Start()
     {
-        joystickOriginalPos = joystickBG.transform.position;
-        joystickRadius = joystickBG.GetComponent<RectTransform>().sizeDelta.y / 4;
+        joystickOriginalPos = joystickBG.transform.position; 
+        joystickRadius = joystickBG.GetComponent<RectTransform>().sizeDelta.y / 4; //Maximum radius of the joystick can move
     }
 
-    public void PointerDown()
+    public void PointerDown() //When the joystick get press this indicate to location or the position where it got press
     {
         joystick.transform.position = Input.mousePosition;
         joystickBG.transform.position = Input.mousePosition;
@@ -47,7 +46,7 @@ public class JoystickMovement : MonoBehaviour
         }
     }
 
-    public void PointerUp()
+    public void PointerUp() //If the joystick is not getting press the joystick gets back to its original place
     {
         joystickVec = Vector2.zero;
         joystick.transform.position = joystickOriginalPos;

@@ -5,12 +5,12 @@ using UnityEngine.EventSystems;
 public class ButtonController : MonoBehaviour
 {
     public bool isPressed;
-    public void PointerDown()
+    public void PointerDown() //If the button got pressed
     {
         isPressed = true;
         
     }
-    public void PointerUp()
+    public void PointerUp() //If the button is not getting press
     {
         isPressed = false;
     }

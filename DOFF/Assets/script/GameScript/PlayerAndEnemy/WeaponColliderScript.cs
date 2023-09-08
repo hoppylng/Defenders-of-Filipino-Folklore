@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class WeaponColliderScript : MonoBehaviour
 {
-    public GameObject player;
-    
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
+        if(collision.gameObject.CompareTag("Enemy")) //To check if it collides to an object with enemy tag on it
         {
-            collision.gameObject.GetComponent<EnemyScript>().TakeDamage(2);
+            collision.gameObject.GetComponent<EnemyScript>().TakeDamage(2); //When the object that have enemy tag take damage when it get hit
         }
         
     }
