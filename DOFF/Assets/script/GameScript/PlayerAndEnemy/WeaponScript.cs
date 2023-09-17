@@ -11,8 +11,8 @@ public class WeaponScript : MonoBehaviour
     private bool swing = false; //Default to false because it needs to be activated first
     
     int degree = 0; //For the sword animation
-    private float weaponY = -0.25f; //Difference of the player and weapon sprite y axis
-    private float weaponX = -0.19f; //Difference of the player and weapon sprite x axis
+    private float weaponY = -10.5f; //Difference of the player and weapon sprite y axis
+    private float weaponX = -3.8f; //Difference of the player and weapon sprite x axis
     //public float attackSpeed = 1.0f;
     //private float attackCooldown = 0f;
 
@@ -36,7 +36,7 @@ public class WeaponScript : MonoBehaviour
     {
         if(swing)
         {
-            if(player.GetComponent<PlayerMovement>().turnedLeft)
+            if(player.GetComponent<PlayerController>().turnedLeft)
             {
                 degree += 7; // Swing sword to the left
             }   
@@ -61,15 +61,15 @@ public class WeaponScript : MonoBehaviour
     {
         //if(attackCooldown <=0)
         //{
-        if(player.GetComponent<PlayerMovement>().turnedLeft) // When Player facing left
+        if(player.GetComponent<PlayerController>().turnedLeft) // When Player facing left
         {
             GetComponent<SpriteRenderer>().flipX = true;
-            weaponX = -0.19f; // The Weapon Sprite goes to the left side of the Player
+            weaponX = -3.8f; // The Weapon Sprite goes to the left side of the Player
         }
         else
         {
             GetComponent<SpriteRenderer>().flipX = false;
-            weaponX = 0.19f; // The Weapon Sprite stays at the right side of the Player
+            weaponX = 3.8f; // The Weapon Sprite stays at the right side of the Player
         }
         pos = player.transform.position;
         pos.x += weaponX;

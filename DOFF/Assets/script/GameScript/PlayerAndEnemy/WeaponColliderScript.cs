@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponColliderScript : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if(collision.gameObject.CompareTag("Enemy")) //To check if it collides to an object with enemy tag on it
         {

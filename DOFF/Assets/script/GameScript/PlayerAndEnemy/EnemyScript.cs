@@ -6,7 +6,7 @@ public class EnemyScript : MonoBehaviour
 {
     private float range;
     public Transform target; //Enemy going towards
-    private Rigidbody2D rb;
+    private Rigidbody rb;
     private Animator animator;
     private float minDistance = 5.0f; //If the player get outside of this range it doesnt follow 
     private bool targetCollision = false;
@@ -50,7 +50,7 @@ public class EnemyScript : MonoBehaviour
         transform.rotation = Quaternion.identity; //To calculate the rotation of the object
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Player") && !targetCollision) //To check if it collides to an object with player tag on it
         {
@@ -67,19 +67,19 @@ public class EnemyScript : MonoBehaviour
             //This if statements just indicate where the enemy get push/bounce away from the player 
             if(right) 
             {
-                GetComponent<Rigidbody2D>().AddForce(transform.right * Push, ForceMode2D.Impulse); 
+                GetComponent<Rigidbody>().AddForce(transform.right * Push, ForceMode.Impulse); 
             }
             if(left)
             {
-                GetComponent<Rigidbody2D>().AddForce(-transform.right * Push, ForceMode2D.Impulse); 
+                GetComponent<Rigidbody>().AddForce(-transform.right * Push, ForceMode.Impulse); 
             }
             if(top) 
             {
-                GetComponent<Rigidbody2D>().AddForce(transform.up * Push, ForceMode2D.Impulse);
+                GetComponent<Rigidbody>().AddForce(transform.up * Push, ForceMode.Impulse);
             } 
             if(bottom) 
             {
-                GetComponent<Rigidbody2D>().AddForce(-transform.up * Push, ForceMode2D.Impulse); 
+                GetComponent<Rigidbody>().AddForce(-transform.up * Push, ForceMode.Impulse); 
             }
             Invoke("FalseCollision",0.5f); //Animation of the push/bounce
         }
@@ -88,7 +88,7 @@ public class EnemyScript : MonoBehaviour
     void FalseCollision() //After the collision the vector of the enemy get reset to zero
     {
         targetCollision = false;
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
     public void TakeDamage(int amount) //Getting hit by the player weapon
@@ -99,11 +99,11 @@ public class EnemyScript : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().sprite = deathSprite; //temporary death sprithe
             isDead = true; //To indicate that the enemy is dead
-            GetComponent<Rigidbody2D>().velocity = Vector3.zero; //To make sure that it doesnt slide/move still when it dies
+            GetComponent<Rigidbody>().velocity = Vector3.zero; //To make sure that it doesnt slide/move still when it dies
             transform.GetChild(0).gameObject.SetActive(false); //To in-activate the blood
             animator.SetTrigger("death");
             script.enabled = false; //To disable this script
-            GetComponent<Collider2D>().enabled = false; //To make sure that it doesnt collide with another entity even its dead
+            GetComponent<Collider>().enabled = false; //To make sure that it doesnt collide with another entity even its dead
             
             Invoke("EnemyDeath",1.5f); //Enemy animation
             
