@@ -16,7 +16,6 @@ public class EnemyScript : MonoBehaviour
     private int hitdamage = 10; //Enemy damage to the player health
     public Behaviour script; //To disabling a script
 
-    public Sprite deathSprite; //Temporary death animation
     //public Sprite[] sprites;
     private bool isDead = false; //For checking if the its still alive
 
@@ -97,7 +96,7 @@ public class EnemyScript : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(true); //This activate the blood sprite
         if(EnemyHealth<0) //To check if enemy is still alive or not
         {
-            GetComponent<SpriteRenderer>().sprite = deathSprite; //temporary death sprithe
+            
             isDead = true; //To indicate that the enemy is dead
             GetComponent<Rigidbody>().velocity = Vector3.zero; //To make sure that it doesnt slide/move still when it dies
             transform.GetChild(0).gameObject.SetActive(false); //To in-activate the blood

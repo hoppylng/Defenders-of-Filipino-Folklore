@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
         }
         
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))//If the player and enemy collide this get trigger
         {
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             currentHealth -= collision.gameObject.GetComponent<EnemyScript>().GetHitDamage(); //Calculation for the player current health if it got hit by the enemy
             if(currentHealth < 1)
             {
-                GetComponent<Rigidbody2D>().velocity = Vector3.zero; //This just makes the player sprite not slide when it dies mid movement animation
+                GetComponent<Rigidbody>().velocity = Vector3.zero; //This just makes the player sprite not slide when it dies mid movement animation
                 mainText.gameObject.SetActive(true); //This show the Game over text on the screen
                 Die();
                 mainText.text = "Game Over";
