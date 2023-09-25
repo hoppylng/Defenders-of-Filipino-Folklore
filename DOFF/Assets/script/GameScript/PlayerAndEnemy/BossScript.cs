@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour
+public class BossScript : MonoBehaviour
 {
     private float range;
     [SerializeField]
@@ -13,19 +13,21 @@ public class EnemyScript : MonoBehaviour
     private bool targetCollision = false;
     private float speed = 35.0f; //Enemy base movement speed
     public float groundDist;
-    private float Push = 90f; //How long it will get push
+    private float Push = 80f; //How long it will get push
     public int EnemyHealth = 6; //Enemy health
+    public int currentHealth; //Variable that updates current health of the player
+    public HealthBarScript healthBar; //Health bar to show how much health of the player have
     private int hitdamage = 10; //Enemy damage to the player health
     //public Behaviour script; //To disabling a script
+
     public LayerMask terrainLayer;
     
-
-    //public Sprite[] sprites;
     private bool isDead = false; //For checking if the its still alive
 
     void Start()
     {
         target = GameObject.Find("Player").transform;
+        currentHealth = EnemyHealth; 
         animator = GetComponent<Animator>();
     }
 
@@ -50,7 +52,7 @@ public class EnemyScript : MonoBehaviour
             if(!targetCollision)
             {
                 transform.LookAt(target.position); //Enemy identify and goes towards the target
-                 if (target.position.x < transform.position.x) //To check if the target is on its left or right
+                if (target.position.x < transform.position.x) //To check if the target is on its left or right
                 {
                     animator.Play("left"); //If the target is towards the left this get activate
                 }
@@ -108,9 +110,9 @@ public class EnemyScript : MonoBehaviour
 
     public void TakeDamage(int amount) //Getting hit by the player weapon
     {
-        EnemyHealth -= amount; //If it get hit enemy health gets lower
+        currentHealth -= amount; //If it get hit enemy health gets lower
         transform.GetChild(0).gameObject.SetActive(true); //This activate the blood sprite
-        if(EnemyHealth<0) //To check if enemy is still alive or not
+        if(currentHealth<0) //To check if enemy is still alive or not
         {
             
             isDead = true; //To indicate that the enemy is dead
@@ -123,6 +125,7 @@ public class EnemyScript : MonoBehaviour
             Invoke("EnemyDeath",1.5f); //Enemy animation
             
         }
+        healthBar.SetHealth(currentHealth); 
         
         Invoke("HideBlood",0.25f); //Animation of the blood to indicate that it got hit
     }

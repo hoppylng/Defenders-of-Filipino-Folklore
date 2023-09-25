@@ -9,7 +9,7 @@ public class WeaponColliderScript : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy")) //To check if it collides to an object with enemy tag on it
         {
             collision.gameObject.GetComponent<EnemyScript>().TakeDamage(2); //When the object that have enemy tag take damage when it get hit
+            //collision.gameObject.GetComponent<BossScript>().TakeDamage(2); //When the object that have enemy tag take damage when it get hit
         }
-        
     }
 }

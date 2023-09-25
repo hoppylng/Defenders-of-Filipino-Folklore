@@ -20,7 +20,7 @@ public class WeaponRange : MonoBehaviour
     }
     void Shoot()
     {
-        if(player.GetComponent<PlayerMovement>().turnedLeft) // When Player facing left
+        if(player.GetComponent<PlayerController>().turnedLeft) // When Player facing left
         {
             GetComponent<SpriteRenderer>().flipX = true;
             weaponX = -0.3f; // The Weapon Sprite goes to the left side of the Player

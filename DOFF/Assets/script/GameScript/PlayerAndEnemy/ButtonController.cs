@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class ButtonController : MonoBehaviour
 {
-    public bool isPressed;
+    public bool isPressed = false;
     public void PointerDown() //If the button got pressed
     {
         isPressed = true;

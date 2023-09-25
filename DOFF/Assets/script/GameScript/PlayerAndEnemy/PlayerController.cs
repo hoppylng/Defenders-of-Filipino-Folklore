@@ -1,28 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed; //Player movement speed
-    public float groundDist; //Player distance from the ground
+    public float speed,  groundDist; //Player movement speed
     public bool turnedLeft = false;
     public int PlayerMaxHealth = 100; //Player max health
     public int currentHealth; //Variable that updates current health of the player
+    public bool Dead = false;
 
     public LayerMask terrainLayer;
     private Rigidbody rb;
     public Animator animator;
     public FixedJoystick movementJoystick;
-    public Behaviour script; //To disable a script
-    public Behaviour scripta;
-    public Behaviour scriptb;
-    public Behaviour scriptc;
+    public Behaviour script , scripta , scriptb;// , scriptc , scriptd; //To disable a script
+    
     
     public HealthBarScript healthBar; //Health bar to show how much health of the player have
-    public Text mainText; //Temporary Game Over screen
-    
+    //public Text mainText; //Temporary Game Over screen
+    public static int coins;
+    public TextMeshProUGUI coinText;
+    public GameObject mainText; //Temporary Game Over screen
+    public GameObject pauseMenu;
     
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        coinText.text = " "+ coins;
         RaycastHit hit;
         Vector3 castPos = transform.position;
         castPos.y += 1;
@@ -94,29 +98,55 @@ public class PlayerController : MonoBehaviour
         {
             transform.GetChild(0).gameObject.SetActive(true); //this just indicate that the player got hit so a blood sprite get activated
             currentHealth -= collision.gameObject.GetComponent<EnemyScript>().GetHitDamage(); //Calculation for the player current health if it got hit by the enemy
+            //currentHealth -= collision.gameObject.GetComponent<BossScript>().GetHitDamage();
             if(currentHealth < 1)
             {
                 GetComponent<Rigidbody>().velocity = Vector3.zero; //This just makes the player sprite not slide when it dies mid movement animation
-                mainText.gameObject.SetActive(true); //This show the Game over text on the screen
+                mainText.SetActive(true); //This show the Game over text on the screen
                 Die();
-                mainText.text = "Game Over";
+                Dead = true;
             }
             healthBar.SetHealth(currentHealth); 
-            Invoke("HidePlayerBlood", 0.25f); //this indicate how long the blood sprite last
+           // Invoke("HidePlayerBlood", 0.25f); //this indicate how long the blood sprite last
         }
     }
-    void HidePlayerBlood() //To hide the blood sprite
+    /*void HidePlayerBlood() //To hide the blood sprite
     {
         transform.GetChild(0).gameObject.SetActive(false);
-    }
+    }*/
 
     private void Die() //to disable the movement in the game when the player die
     {
         script.enabled = false;
         scripta.enabled = false;
         scriptb.enabled = false;
-        scriptc.enabled = false;
+        //scriptc.enabled = false;
+        //scriptd.enabled = false;
+        //scripte.enabled = false;
         animator.SetTrigger("death");
+    }
+
+    public void ReplayLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
+        coins = 0;
+    }
+    
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+    }
+    public void GotoMenu()
+    {
+        SceneManager.LoadScene("MENU");
     }
 }
 
